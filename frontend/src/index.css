@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Base Signature Palette & Pantone Themes */
+:root, [data-theme="waypoint-heritage"] {
+  --color-primary: #1A3C34; /* Deep market-awning green */
+  --color-primary-dark: #112822;
+  --color-primary-light: #285C50;
+  --color-primary-soft: #E5EFEA;
+  --color-secondary: #C4522A; /* Terracotta-clay */
+  --color-secondary-soft: #FAECE7;
+  --color-accent: #E8A33D; /* Turmeric/marigold */
+  --color-accent-dark: #C7831C;
+  --color-accent-light: #F8BC5C;
+  --color-accent-soft: #FDF4E5;
+  --color-bg: #FDF8F0; /* Warm off-white background */
+  --color-surface: #EFE6D8; /* Card/surface background */
+  --color-surface-card: #FFFFFF;
+  --color-text: #2B2B2B; /* Near-black for body text */
+  --color-text-muted: #6B6B6B;
+}
+
+[data-theme="poseidon-pumpkin"] {
+  --color-primary: #1B3550; /* Pantone Poseidon */
+  --color-primary-dark: #102337;
+  --color-primary-light: #2B4B6E;
+  --color-primary-soft: #E6EEF5;
+  --color-secondary: #456B91; /* Pantone Morse Blue */
+  --color-secondary-soft: #EBF1F7;
+  --color-accent: #BD5831; /* Pantone Pureed Pumpkin */
+  --color-accent-dark: #9F411D;
+  --color-accent-light: #DE7249;
+  --color-accent-soft: #FDEEE7;
+  --color-bg: #F5F8FA;
+  --color-surface: #E8EFF5;
+  --color-surface-card: #FFFFFF;
+  --color-text: #132233;
+  --color-text-muted: #5F748D;
+}
+
+[data-theme="blue-redviolet"] {
+  --color-primary: #1E3A8A; /* Pantone Blue Shades */
+  --color-primary-dark: #13265C;
+  --color-primary-light: #2563EB;
+  --color-primary-soft: #EFF6FF;
+  --color-secondary: #3B82F6;
+  --color-secondary-soft: #E0EDFD;
+  --color-accent: #BD2178; /* Pantone Red-Violet */
+  --color-accent-dark: #96135D;
+  --color-accent-light: #E03F9B;
+  --color-accent-soft: #FDEEF6;
+  --color-bg: #F8FAFC;
+  --color-surface: #EDF2F7;
+  --color-surface-card: #FFFFFF;
+  --color-text: #0F172A;
+  --color-text-muted: #64748B;
+}
+
+[data-theme="cannoli-amazon-raspberry"] {
+  --color-primary: #2D5948; /* Pantone Amazon */
+  --color-primary-dark: #1C3B2F;
+  --color-primary-light: #3D7560;
+  --color-primary-soft: #E6F0EB;
+  --color-secondary: #5F8F78;
+  --color-secondary-soft: #EEF5F1;
+  --color-accent: #CB2D58; /* Pantone Raspberry */
+  --color-accent-dark: #A51A40;
+  --color-accent-light: #E64771;
+  --color-accent-soft: #FCEBF0;
+  --color-bg: #F5F4EC; /* Pantone Cannoli Cream */
+  --color-surface: #E6E5D8;
+  --color-surface-card: #FFFFFF;
+  --color-text: #1E2622;
+  --color-text-muted: #596961;
+}
+
+[data-theme="supersonic-ethereal"] {
+  --color-primary: #1B2F69; /* Pantone Surf The Web */
+  --color-primary-dark: #111E45;
+  --color-primary-light: #2B4592;
+  --color-primary-soft: #E8EEF8;
+  --color-secondary: #385E9D; /* Pantone Super Sonic */
+  --color-secondary-soft: #EDF3FA;
+  --color-accent: #2C7A58; /* Deep Sage */
+  --color-accent-dark: #1E5C41;
+  --color-accent-light: #3C9B72;
+  --color-accent-soft: #DCE8E0; /* Pantone Ethereal Green */
+  --color-bg: #F2F6F4;
+  --color-surface: #E0EAE4;
+  --color-surface-card: #FFFFFF;
+  --color-text: #121B2F;
+  --color-text-muted: #536482;
+}
+
+[data-theme="pastel-purple"] {
+  --color-primary: #4A3B69; /* Deep Imperial */
+  --color-primary-dark: #32254A;
+  --color-primary-light: #67528F;
+  --color-primary-soft: #F2EEF8;
+  --color-secondary: #9B82B8; /* Pantone Pastel Purple */
+  --color-secondary-soft: #F6F3FA;
+  --color-accent: #C24F78; /* Soft Berry */
+  --color-accent-dark: #9E375B;
+  --color-accent-light: #D96F94;
+  --color-accent-soft: #FBEBF1;
+  --color-bg: #F7F5FA; /* Neutral Accents */
+  --color-surface: #ECE7F3;
+  --color-surface-card: #FFFFFF;
+  --color-text: #271C36;
+  --color-text-muted: #6C6080;
+}
+
+[data-theme="light-blue"] {
+  --color-primary: #0369A1; /* Light Blue Shades Primary */
+  --color-primary-dark: #075985;
+  --color-primary-light: #0EA5E9;
+  --color-primary-soft: #E0F2FE;
+  --color-secondary: #38BDF8;
+  --color-secondary-soft: #F0F9FF;
+  --color-accent: #EA580C; /* Warm Citrus Accent */
+  --color-accent-dark: #C2410C;
+  --color-accent-light: #F97316;
+  --color-accent-soft: #FFF7ED;
+  --color-bg: #F0F9FF;
+  --color-surface: #E0F2FE;
+  --color-surface-card: #FFFFFF;
+  --color-text: #0C4A6E;
+  --color-text-muted: #507D99;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Ambient Subtle Cursor Spotlight Effect */
+.ambient-spotlight {
+  background-image: radial-gradient(
+    700px circle at var(--mouse-x, 50%) var(--mouse-y, 250px),
+    rgba(232, 163, 61, 0.07),
+    transparent 70%
+  );
+}
+
+/* Subtle dot grid texture */
+.dot-matrix-bg {
+  background-image: radial-gradient(rgba(26, 60, 52, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(232, 163, 61, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 60, 52, 0.5);
+}
+
+/* Paper receipt torn edge */
+.torn-bottom-edge {
+  background-image: radial-gradient(circle, var(--color-bg) 65%, transparent 66%);
+  background-size: 14px 14px;
+  background-repeat: repeat-x;
+}
+
+/* Audio Waveform Animation */
+@keyframes audioWave {
+  0%, 100% { height: 6px; }
+  50% { height: 20px; }
+}
+.audio-bar {
+  width: 3px;
+  border-radius: 9999px;
+  background-color: currentColor;
+  animation: audioWave 1s ease-in-out infinite;
+}
+.audio-bar:nth-child(2) { animation-delay: 0.15s; }
+.audio-bar:nth-child(3) { animation-delay: 0.3s; }
+.audio-bar:nth-child(4) { animation-delay: 0.45s; }
+.audio-bar:nth-child(5) { animation-delay: 0.6s; }
+
+/* Print specific rules for merchant standee */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable-standee, .printable-standee * {
+    visibility: visible;
+  }
+  .printable-standee {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: none !important;
+  }
+}
+
+/* Accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
