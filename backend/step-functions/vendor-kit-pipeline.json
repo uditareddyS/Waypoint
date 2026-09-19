@@ -1,0 +1,16 @@
+{
+  "Comment": "Vendor kit generation pipeline",
+  "StartAt": "ParseInput",
+  "States": {
+    "ParseInput": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:ap-southeast-2:121356473401:function:parseVendorInput",
+      "Next": "GenerateKit"
+    },
+    "GenerateKit": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:ap-southeast-2:121356473401:function:generateVendorKit",
+      "End": true
+    }
+  }
+}
