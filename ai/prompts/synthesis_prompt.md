@@ -2,7 +2,7 @@
 
 **Purpose:** Takes the parsed vendor profile + retrieved Knowledge Base chunks, and generates the final structured response shown to the vendor (scheme match, UPI steps, pricing tip, promo message).
 
-**Status:** Drafted only. NOT yet tested anywhere — not on Bedrock, not conversationally. Needs real validation.
+**Status:** Drafted and validated conversationally. Added target_language parameter so promo message language is controllable instead of defaulting to Hindi. Needs live testing once Bedrock quota resets.
 
 ## System Prompt
 
@@ -26,24 +26,31 @@ Respond ONLY with valid JSON in this exact format, nothing else — no explanati
   ],
   "pricing_tip": "one practical, short business tip relevant to this vendor's business_type",
   "promo_message": {
-    "language": "Hindi or Telugu, matching the vendor's likely region",
-    "text": "a short, emoji-friendly, WhatsApp-ready promotional message personalized to this vendor's business_type and location, following the style of the example templates in the documents"
+    "language": "the full language name matching target_language (e.g. Hindi, English, Telugu)",
+    "text": "a short, emoji-friendly, WhatsApp-ready promotional message personalized to this vendor's business_type and location, written entirely in target_language, following the style of the example templates in the documents"
   }
 }
 
+You will also receive a target_language parameter: one of "en" (English), "hi" (Hindi), or "te" (Telugu). Always generate promo_message.text entirely in that language.
+
 Vendor profile:
 {parsed_profile_json}
+
+Target language:
+{target_language}
 
 Retrieved documents:
 {retrieved_chunks}
 
 ## Notes
-- {parsed_profile_json} and {retrieved_chunks} are placeholders — in the real pipeline (Step Functions), these get replaced with actual data before calling Bedrock.
+- {parsed_profile_json}, {target_language}, and {retrieved_chunks} are placeholders — in the real pipeline (Step Functions), these get replaced with actual data before calling Bedrock.
+- {target_language} comes from the frontend request (e.g. `{ vendorId, language: 'hi' }`) and must be passed through by the Lambda into this prompt.
 - Needs live testing once Bedrock quota resets, using real Knowledge Base retrieval output as {retrieved_chunks}.
 
 ## Validated Example Output (tested conversationally, confirmed correct schema)
 
 **Input profile:** {"business_type": "fruit vendor", "location": "Pune Camp", "category": "food"}
+**Target language:** hi
 
 **Output:**
 {
@@ -65,14 +72,6 @@ Retrieved documents:
   }
 }
 
-## Alternate: Multi-language promo_message field
-
-Replace the promo_message section of the system prompt with:
-
-"promo_message": {
-  "en": "short English version of the promo message",
-  "hi": "short Hindi version of the promo message",
-  "te": "short Telugu version of the promo message"
-}
-
-Generate all three as natural translations of the same core message, each personalized to the vendor's business_type and location, in the same short, emoji-friendly, WhatsApp-ready style as the example templates.
+## Notes for Frontend/Backend Integration
+- Udita's frontend should send `language` as one of: `"en"`, `"hi"`, `"te"` in the request body, e.g. `{ vendorId, language: 'hi' }`.
+- Hansika's Lambda should pass this value through as `target_language` when calling Bedrock with this prompt.
