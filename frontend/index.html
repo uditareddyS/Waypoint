@@ -671,8 +671,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 </div>
 <div class="scheme-list" id="schemeList"></div>
 <div class="card-actions" style="margin-top:1.65rem;">
-<button class="btn btn-primary btn-sm"><span class="shine"></span>Start application</button>
-<button class="btn btn-light btn-sm">See full eligibility</button>
+<button class="btn btn-primary btn-sm" id="startApplicationBtn"><span class="shine"></span>Start application</button>
+<button class="btn btn-light btn-sm" id="seeEligibilityBtn">See full eligibility</button>
+</div>
+<div id="eligibilityPanel" style="display:none;margin-top:1.15rem;background:rgba(241,234,221,0.09);border:1px solid rgba(241,234,221,0.15);border-radius:16px;padding:1.15rem 1.35rem;">
+<div style="font-size:.85rem;color:rgba(241,234,221,0.85);line-height:1.7;">
+<strong style="color:#F4EEE3;">Typically needed:</strong> Aadhaar card, PAN card, a photo of your shop or stall, and your last 6 months' bank statement. Exact requirements can vary by scheme — the official application portal will confirm what's needed for your case.
+</div>
 </div>
 </article>
 
@@ -694,7 +699,7 @@ Payments
 </div>
 <div class="card-actions">
 <button class="btn btn-dark btn-sm" id="downloadQr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M5 20h14"/></svg>Download QR</button>
-<button class="btn btn-ghost btn-sm">Share on WhatsApp</button>
+<button class="btn btn-ghost btn-sm" id="shareWhatsappBtn">Share on WhatsApp</button>
 </div>
 </article>
 
@@ -1138,11 +1143,23 @@ if (downloadQrBtn) {
 }
 
 // Chip selection
+const CHIP_PRESETS = {
+  tailor: "I run a tailoring shop with 2 machines. I want more customers and a UPI QR.",
+  fruit: "I sell fruit and vegetables at a stall. I want more customers and a UPI QR.",
+  tea: "I run a tea and snacks stall. I want more customers and a UPI QR.",
+  repair: "I run a mobile and electronics repair shop. I want more customers and a UPI QR.",
+  beauty: "I offer beauty and parlour services from home. I want more customers and a UPI QR.",
+};
 document.querySelectorAll('.chip').forEach(function(chip) {
 chip.addEventListener('click', function() {
 document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); c.setAttribute('aria-selected', 'false'); });
 chip.classList.add('active');
 chip.setAttribute('aria-selected', 'true');
+const key = chip.dataset.key;
+const businessInput = document.getElementById('businessInput');
+if (businessInput && CHIP_PRESETS[key]) {
+  businessInput.value = CHIP_PRESETS[key];
+}
 });
 });
 
@@ -1180,7 +1197,7 @@ async function generateKit(businessText) {
     const genRes = await fetch(VENDOR_GENERATE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ vendorId: vendorId, language: targetLanguage })
+      body: JSON.stringify({ vendorId: vendorId, business_type: businessText, language: targetLanguage })
     });
     if (!genRes.ok) throw new Error('Kit generation failed: ' + genRes.status);
     const result = await genRes.json();
@@ -1203,6 +1220,7 @@ async function generateKit(businessText) {
     document.getElementById('schemeCount').textContent = result.scheme.name;
     document.getElementById('schemeTotal').textContent = result.scheme.amount;
     document.getElementById('ringValue').textContent = '✓';
+    window.__currentSchemeName = result.scheme.name;
 
     // QR card — real, scannable
     renderRealQR(result.upi.qrPayload);
@@ -1291,7 +1309,7 @@ try {
   const genRes = await fetch(VENDOR_GENERATE_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ vendorId: window.__currentVendorId, language: langMapFull[lang] || 'english' })
+    body: JSON.stringify({ vendorId: window.__currentVendorId, business_type: window.__currentBusinessText, language: langMapFull[lang] || 'english' })
   });
   if (!genRes.ok) throw new Error('status ' + genRes.status);
   const result = await genRes.json();
@@ -1392,6 +1410,56 @@ camera.updateProjectionMatrix();
 renderer.setSize(window.innerWidth, window.innerHeight);
 });
 }
+}
+
+// Start application — opens the real official scheme website directly
+const SCHEME_URLS = {
+  'pm svanidhi': 'https://pmsvanidhi.mohua.gov.in/',
+  'pmsvanidhi': 'https://pmsvanidhi.mohua.gov.in/',
+  'pm vishwakarma': 'https://pmvishwakarma.gov.in/',
+  'pmegp': 'https://www.kviconline.gov.in/pmegpeportal/',
+  'udyam': 'https://udyamregistration.gov.in/',
+  'stand-up india': 'https://www.standupmitra.in/',
+  'stand up india': 'https://www.standupmitra.in/',
+  'mudra': 'https://www.mudra.org.in/',
+  'pradhan mantri mudra yojana': 'https://www.mudra.org.in/',
+};
+const startApplicationBtn = document.getElementById('startApplicationBtn');
+if (startApplicationBtn) {
+  startApplicationBtn.addEventListener('click', function() {
+    const schemeName = (window.__currentSchemeName || '').toLowerCase().trim();
+    let url = null;
+    for (const key in SCHEME_URLS) {
+      if (schemeName.includes(key)) { url = SCHEME_URLS[key]; break; }
+    }
+    if (!url) {
+      // Unknown scheme — fall back to a direct search rather than guessing a wrong link
+      url = 'https://www.google.com/search?q=' + encodeURIComponent((window.__currentSchemeName || 'government scheme') + ' apply official site');
+    }
+    window.open(url, '_blank');
+  });
+}
+
+// See full eligibility — toggles the inline documents panel
+const seeEligibilityBtn = document.getElementById('seeEligibilityBtn');
+if (seeEligibilityBtn) {
+  seeEligibilityBtn.addEventListener('click', function() {
+    const panel = document.getElementById('eligibilityPanel');
+    if (!panel) return;
+    const isOpen = panel.style.display !== 'none';
+    panel.style.display = isOpen ? 'none' : 'block';
+    seeEligibilityBtn.textContent = isOpen ? 'See full eligibility' : 'Hide eligibility';
+  });
+}
+
+// Share on WhatsApp — opens with the real generated promo message pre-filled
+const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
+if (shareWhatsappBtn) {
+  shareWhatsappBtn.addEventListener('click', function() {
+    const promoText = document.getElementById('promoText');
+    const text = (promoText && promoText.textContent.trim()) || 'Check out my shop!';
+    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  });
 }
 
 // Mic button
