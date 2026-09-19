@@ -64,3 +64,15 @@ Retrieved documents:
     "text": "🍎 ताज़े फल अब पुणे कैंप में उपलब्ध हैं! सबसे अच्छी कीमत, रोज़ ताज़ा माल। आज ही आएं!"
   }
 }
+
+## Alternate: Multi-language promo_message field
+
+Replace the promo_message section of the system prompt with:
+
+"promo_message": {
+  "en": "short English version of the promo message",
+  "hi": "short Hindi version of the promo message",
+  "te": "short Telugu version of the promo message"
+}
+
+Generate all three as natural translations of the same core message, each personalized to the vendor's business_type and location, in the same short, emoji-friendly, WhatsApp-ready style as the example templates.
