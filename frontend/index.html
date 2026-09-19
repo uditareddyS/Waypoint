@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Waypoint — Business kits for India's shopkeepers, vendors & makers</title>
 <meta name="description" content="Tell Waypoint about your business in your own words. Get scheme matches, a UPI-ready QR, and WhatsApp promo messages in your language — in under a minute.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1207,19 +1208,34 @@ async function generateKit(businessText) {
 
     // Scheme card
     const schemeListEl = document.getElementById('schemeList');
-    schemeListEl.innerHTML =
-      '<div class="scheme-row">' +
-        '<div class="idx">01</div>' +
-        '<div>' +
-          '<div class="nm">' + result.scheme.name + '</div>' +
-          '<div class="sub">' + result.scheme.detail + '</div>' +
-        '</div>' +
-        '<div class="amt">' + result.scheme.amount + '</div>' +
-      '</div>';
-    document.getElementById('schemeCount').textContent = result.scheme.name;
-    document.getElementById('schemeTotal').textContent = result.scheme.amount;
-    document.getElementById('ringValue').textContent = '✓';
-    window.__currentSchemeName = result.scheme.name;
+    if (result.scheme && result.scheme.name) {
+      schemeListEl.innerHTML =
+        '<div class="scheme-row">' +
+          '<div class="idx">01</div>' +
+          '<div>' +
+            '<div class="nm">' + result.scheme.name + '</div>' +
+            '<div class="sub">' + result.scheme.detail + '</div>' +
+          '</div>' +
+          '<div class="amt">' + result.scheme.amount + '</div>' +
+        '</div>';
+      document.getElementById('schemeCount').textContent = result.scheme.name;
+      document.getElementById('schemeTotal').textContent = result.scheme.amount;
+      document.getElementById('ringValue').textContent = '✓';
+      window.__currentSchemeName = result.scheme.name;
+    } else {
+      schemeListEl.innerHTML =
+        '<div class="scheme-row">' +
+          '<div class="idx">—</div>' +
+          '<div>' +
+            '<div class="nm">No direct scheme match yet</div>' +
+            '<div class="sub">Udyam Registration is free and open to nearly every small business — a good place to start while we refine matching for your category.</div>' +
+          '</div>' +
+        '</div>';
+      document.getElementById('schemeCount').textContent = 'General guidance';
+      document.getElementById('schemeTotal').textContent = '—';
+      document.getElementById('ringValue').textContent = '—';
+      window.__currentSchemeName = 'Udyam Registration';
+    }
 
     // QR card — real, scannable
     renderRealQR(result.upi.qrPayload);
