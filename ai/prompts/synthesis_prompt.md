@@ -40,3 +40,27 @@ Retrieved documents:
 ## Notes
 - {parsed_profile_json} and {retrieved_chunks} are placeholders — in the real pipeline (Step Functions), these get replaced with actual data before calling Bedrock.
 - Needs live testing once Bedrock quota resets, using real Knowledge Base retrieval output as {retrieved_chunks}.
+
+## Validated Example Output (tested conversationally, confirmed correct schema)
+
+**Input profile:** {"business_type": "fruit vendor", "location": "Pune Camp", "category": "food"}
+
+**Output:**
+{
+  "scheme_match": {
+    "name": "PM SVANidhi",
+    "why": "PM SVANidhi is specifically designed for street vendors like fruit sellers, offering small collateral-free loans to build working capital.",
+    "loan_amount": "First loan up to ₹15,000, rising to ₹25,000 and then ₹50,000 with timely repayment",
+    "how_to_apply": "Apply via pmsvanidhi.mohua.gov.in, a nearby Common Service Centre (CSC), or a participating bank"
+  },
+  "upi_setup_steps": [
+    "Install a merchant app such as PhonePe Business, Paytm for Business, or BharatPe",
+    "Sign up with your mobile number linked to your bank account and verify with OTP",
+    "Complete KYC using Aadhaar and PAN, then generate and display your QR code at your stall"
+  ],
+  "pricing_tip": "Display your fruit prices clearly and keep them consistent — vendors with transparent pricing tend to build stronger repeat customer trust.",
+  "promo_message": {
+    "language": "Hindi",
+    "text": "🍎 ताज़े फल अब पुणे कैंप में उपलब्ध हैं! सबसे अच्छी कीमत, रोज़ ताज़ा माल। आज ही आएं!"
+  }
+}
