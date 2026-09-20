@@ -132,6 +132,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 .hero-img-wrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(190deg, rgba(11,60,93,0) 38%, rgba(11,60,93,0.45) 100%); }
 .img-caption { position: absolute; left: 1.35rem; right: 1.35rem; bottom: 1.35rem; color: #F7F1E6; z-index: 2; }
 .img-caption .k { font-size: .72rem; letter-spacing: .19em; text-transform: uppercase; opacity: .82; }
+.illustrative-badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: .28rem .62rem; border-radius: 100px; background: rgba(196,82,42,0.14); color: #A8461E; border: 1px solid rgba(196,82,42,0.3); }
+.illustrative-badge::before { content: "●"; font-size: .55rem; }
+.img-fallback { width: 100%; height: 100%; background: repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 14px), linear-gradient(135deg, var(--morse), var(--poseidon)); display: flex; align-items: center; justify-content: center; }
+.img-fallback.round { border-radius: 50%; }
+.img-fallback svg { width: 34%; height: 34%; stroke: rgba(253,248,240,0.55); fill: none; stroke-width: 1.6; }
 .img-caption .v { font-family: var(--display); font-size: 1.32rem; line-height: 1.25; margin-top: .28rem; }
 .float-card { position: absolute; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.7); border-radius: 18px; padding: .85rem 1.05rem; box-shadow: 0 26px 50px -22px rgba(11,60,93,0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); will-change: transform; }
 .float-card--stat { top: 6%; left: -9%; width: 200px; }
@@ -449,6 +454,21 @@ ul { margin: 0; padding: 0; list-style: none; }
 .results.revealed { grid-template-rows: 1fr; opacity: 1; }
 }
 </style>
+<script>
+window.imgFallback = function(el, iconType) {
+  el.onerror = null;
+  var icons = {
+    portrait: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>',
+    scene: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 5-5 4 4"/><circle cx="8" cy="9" r="1.5"/></svg>'
+  };
+  var wrap = document.createElement('div');
+  wrap.className = 'img-fallback' + (el.classList.contains('story-portrait-img') || el.closest('.story-person') ? ' round' : '');
+  wrap.style.width = el.width ? el.width + 'px' : '100%';
+  wrap.style.height = el.height ? el.height + 'px' : '100%';
+  wrap.innerHTML = icons[iconType] || icons.scene;
+  if (el.parentNode) el.parentNode.replaceChild(wrap, el);
+};
+</script>
 </head>
 <body>
 <div class="progress-bar" id="progressBar"></div>
@@ -475,7 +495,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 <a href="#faq">FAQ</a>
 </nav>
 <div class="header-actions">
-<a href="#kit" class="btn btn-primary btn-magnetic"><span class="shine"></span>Start free</a>
+<a href="#kit" class="btn btn-primary btn-magnetic"><span class="shine"></span>Generate my kit</a>
 <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
 <span></span><span></span><span></span>
 </button>
@@ -516,7 +536,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 <p class="hero-sub reveal" style="--d:.16s">One voice note or one line of text. Waypoint turns it into government scheme matches, a UPI-ready QR, and WhatsApp promo messages written in your own language — in about 40 seconds.</p>
 <div class="hero-badges reveal" style="--d:.26s">
 <div class="badge"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>No paperwork to start</div>
-<div class="badge"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>12 Indian languages</div>
+<div class="badge"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>3 languages live · 12 planned</div>
 <div class="badge"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>Works on a ₹7,000 phone</div>
 </div>
 <div class="reveal" style="--d:.34s;margin-top:2.15rem;display:flex;flex-wrap:wrap;gap:.85rem;">
@@ -527,20 +547,20 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 <div class="hero-visual reveal-scale" style="--d:.2s">
 <div class="hero-img-wrap" data-parallax="0.02">
-<img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1100&q=80" alt="A shopkeeper standing behind the counter of his small store" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1100&q=80';">
+<img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1100&q=80" alt="A shopkeeper standing behind the counter of his small store" onerror="this.onerror=function(){imgFallback(this,'scene')};this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1100&q=80';">
 <div class="img-caption">
-<div class="k">Illustrative example</div>
+<div class="illustrative-badge" style="margin-bottom:.5rem;">Illustrative example</div>
 <div class="v">"I spoke for 40 seconds.<br>It did the paperwork thinking."</div>
 </div>
 </div>
 <div class="float-card float float-card--stat" data-parallax="0.055">
-<div class="fc-label">Illustrative target</div>
+<div class="illustrative-badge" style="margin-bottom:.4rem;">Illustrative target</div>
 <div class="fc-value">+38%</div>
 <div class="fc-sub">monthly reach after WhatsApp promos</div>
 <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i></div>
 </div>
 <div class="float-card float b float-card--rating" data-parallax="0.075">
-<div class="fc-label" style="margin-bottom:.35rem;">Illustrative example</div>
+<div class="illustrative-badge" style="margin-bottom:.5rem;">Illustrative example</div>
 <div class="stars" aria-hidden="true">
 <svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.2 6.6.9-4.8 4.7 1.2 6.7L12 17.3 6.1 20.5l1.2-6.7L2.5 9.1l6.6-.9z"/></svg>
 <svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.2 6.6.9-4.8 4.7 1.2 6.7L12 17.3 6.1 20.5l1.2-6.7L2.5 9.1l6.6-.9z"/></svg>
@@ -589,7 +609,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 <div class="step-num">01</div>
 <h3>Speak or type it out</h3>
 <p>"Tailor shop, two machines, want more customers before Diwali." That's enough. No registration, no documents, no 12-field form.</p>
-<div class="step-tag">Voice · Text · 12 languages</div>
+<div class="step-tag">Voice · Text · 3 languages live</div>
 </article>
 <article class="step reveal" style="--d:.14s">
 <div class="step-num">02</div>
@@ -776,10 +796,10 @@ Payments
 <div class="illustrative-tag">Figures below are illustrative targets, not measured results</div>
 </div>
 <div class="stat-grid">
-<div class="stat reveal" style="--d:.05s"><div class="num"><span class="counter" data-target="63" data-suffix="M">63M</span></div><div class="lbl">Micro & small businesses across India, most of them offline-first</div></div>
+<div class="stat reveal" style="--d:.05s"><div class="num"><span class="counter" data-target="63" data-suffix="M">63M</span></div><div class="lbl">Estimated micro & small enterprises across India, most offline-first<br><small style="opacity:.6;font-size:.72rem;">Source: NSS 73rd Round Survey, Ministry of MSME</small></div></div>
 <div class="stat reveal" style="--d:.12s"><div class="num">₹<span class="counter" data-target="1.4" data-dec="1">1.4</span>Cr</div><div class="lbl">Illustrative target for benefits & working capital unlocked</div></div>
-<div class="stat reveal" style="--d:.19s"><div class="num"><span class="counter" data-target="40" data-suffix="s">40s</span></div><div class="lbl">Median time from first sentence to a finished, downloadable kit</div></div>
-<div class="stat reveal" style="--d:.26s"><div class="num"><span class="counter" data-target="12">12</span></div><div class="lbl">Indian languages supported, including Hindi, Telugu, Tamil & Marathi</div></div>
+<div class="stat reveal" style="--d:.19s"><div class="num"><span class="counter" data-target="40" data-suffix="s">40s</span></div><div class="lbl">Illustrative target · median time from first sentence to a finished kit</div></div>
+<div class="stat reveal" style="--d:.26s"><div class="num"><span class="counter" data-target="3">3</span></div><div class="lbl">Indian languages live today (English, Hindi, Telugu) — 12 planned at launch</div></div>
 </div>
 <div class="chart-card reveal">
 <div>
@@ -799,7 +819,7 @@ Payments
 </div>
 </div>
 <div class="impact-img reveal-scale">
-<img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=80" alt="Fresh produce arranged at a local market stall" loading="lazy" onerror="this.onerror=null;this.style.display='none';">
+<img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=80" alt="Fresh produce arranged at a local market stall" loading="lazy" onerror="imgFallback(this,'scene')">
 <div class="overlay">
 <p>"The scheme existed for six years. I just never had someone explain it in one sentence."</p>
 </div>
@@ -820,24 +840,24 @@ Payments
 <svg class="quote-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 26c0-9 5-15 13-18l2 4c-5 2-8 6-8 10h6v14H6zm20 0c0-9 5-15 13-18l2 4c-5 2-8 6-8 10h6v14H26z"/></svg>
 <p class="q">"I typed one line about my shop. It found a toolkit scheme I'd never heard of, and the QR code was printed and on my counter the same evening."</p>
 <div class="story-person">
-<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Illustrative portrait" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=200&q=80';">
-<div><div class="nm">Illustrative example</div><div class="rl">Hardware shop · Indore</div></div>
+<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Illustrative portrait" loading="lazy" onerror="this.onerror=function(){imgFallback(this,'portrait')};this.src='https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=200&q=80';">
+<div><div class="illustrative-badge" style="margin-bottom:.35rem;">Illustrative example</div><div class="rl">Hardware shop · Indore</div></div>
 </div>
 </article>
 <article class="story reveal" style="--d:.13s">
 <svg class="quote-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 26c0-9 5-15 13-18l2 4c-5 2-8 6-8 10h6v14H6zm20 0c0-9 5-15 13-18l2 4c-5 2-8 6-8 10h6v14H26z"/></svg>
 <p class="q">"The Telugu promo messages sound like something I'd actually say to a customer. I forward them to my group every Friday now."</p>
 <div class="story-person">
-<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Illustrative portrait" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80';">
-<div><div class="nm">Illustrative example</div><div class="rl">Pickle business · Vijayawada</div></div>
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Illustrative portrait" loading="lazy" onerror="this.onerror=function(){imgFallback(this,'portrait')};this.src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80';">
+<div><div class="illustrative-badge" style="margin-bottom:.35rem;">Illustrative example</div><div class="rl">Pickle business · Vijayawada</div></div>
 </div>
 </article>
 <article class="story reveal" style="--d:.21s">
 <svg class="quote-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 26c0-9 5-15 13-18l2 4c-5 2-8 6-8 10h6v14H6zm20 0c0-9 5-15 13-18l2 4c-5 2-8 6-8 10h6v14H26z"/></svg>
 <p class="q">"Earlier I'd give up halfway through government websites. This gave me a checklist with exact documents and deadlines. That's the part I needed."</p>
 <div class="story-person">
-<img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=200&q=80" alt="Illustrative portrait" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=200&q=80';">
-<div><div class="nm">Illustrative example</div><div class="rl">Boutique owner · Pune</div></div>
+<img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=200&q=80" alt="Illustrative portrait" loading="lazy" onerror="this.onerror=function(){imgFallback(this,'portrait')};this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=200&q=80';">
+<div><div class="illustrative-badge" style="margin-bottom:.35rem;">Illustrative example</div><div class="rl">Boutique owner · Pune</div></div>
 </div>
 </article>
 </div>
@@ -852,16 +872,12 @@ Payments
 <h2 class="reveal" style="--d:.08s;font-size:clamp(2.15rem,5vw,3.35rem);margin:1rem 0 1.15rem;">Straight answers,<br>no fine print.</h2>
 <p class="reveal" style="--d:.15s;color:var(--ink-soft);font-size:1.075rem;">Still unsure about something? Our support team answers on WhatsApp in Hindi, English, Telugu, Tamil and Marathi — usually within a few hours.</p>
 <div class="faq-side reveal" style="--d:.22s;margin-top:2.15rem;">
-<h3>Talk to a real person</h3>
-<p>No chatbot loops. Tell us your shop name and city, and we'll help you finish the application.</p>
+<h3>Built for a hackathon, openly</h3>
+<p>This is a live hackathon submission. Full source, architecture, and build notes are public — dig in or reach out on GitHub.</p>
 <div class="contact">
 <div class="contact-row">
-<div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.6-4.3A8.5 8.5 0 1 1 20.5 11.6z"/></svg></div>
-<div><div class="t">WhatsApp support</div><div class="s">+91 98765 43210 · 9 AM – 8 PM IST</div></div>
-</div>
-<div class="contact-row">
-<div class="ic" style="background:var(--pumpkin);"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.6"/><path d="m3.6 6.6 8.4 6 8.4-6"/></svg></div>
-<div><div class="t">Email us</div><div class="s">help@waypoint.in</div></div>
+<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4L2 12l6 8M16 4l6 8-6 8"/></svg></div>
+<div><div class="t">Source code & docs</div><div class="s"><a href="https://github.com/uditareddyS/Waypoint" target="_blank" rel="noopener" style="text-decoration:underline;">github.com/uditareddyS/Waypoint</a></div></div>
 </div>
 </div>
 </div>
@@ -873,7 +889,7 @@ Payments
 </div>
 <div class="faq-item reveal" style="--d:.1s">
 <button class="faq-q" aria-expanded="false">Do I need to know English or use a laptop?<span class="faq-icon" aria-hidden="true"></span></button>
-<div class="faq-a"><div><p>Not at all. Waypoint is built phone-first for patchy networks, and you can speak or type in 12 Indian languages. The whole flow works in a basic Android browser and takes under a minute on a 4G connection.</p></div></div>
+<div class="faq-a"><div><p>Not at all. Waypoint is built phone-first for patchy networks. Today you can generate your kit in English, Hindi or Telugu, with more Indian languages on our roadmap. The whole flow works in a basic Android browser and takes under a minute on a 4G connection.</p></div></div>
 </div>
 <div class="faq-item reveal" style="--d:.15s">
 <button class="faq-q" aria-expanded="false">How accurate are the scheme matches?<span class="faq-icon" aria-hidden="true"></span></button>
@@ -955,8 +971,18 @@ Payments
 <p style="font-size:.825rem;margin-top:.95rem;opacity:.62;">No spam. Unsubscribe in one tap.</p>
 </div>
 </div>
+<div style="border-top:1px solid rgba(238,231,219,0.13);padding-top:1.35rem;margin-top:1.35rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem .9rem;font-size:.8rem;color:rgba(238,231,219,0.55);">
+<span style="font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.7rem;color:rgba(238,231,219,0.4);">Built with</span>
+<span>Amazon S3</span><span style="opacity:.3;">·</span>
+<span>API Gateway</span><span style="opacity:.3;">·</span>
+<span>AWS Lambda</span><span style="opacity:.3;">·</span>
+<span>DynamoDB</span><span style="opacity:.3;">·</span>
+<span>Amazon Bedrock Knowledge Bases</span><span style="opacity:.3;">·</span>
+<span>Step Functions</span>
+</div>
 <div class="footer-bottom">
-<div>© <span id="year">2024</span> Waypoint Technologies Pvt. Ltd. Built for India's shopkeepers · Hackathon demo</div>
+<div>© <span id="year">2026</span> Waypoint Technologies Pvt. Ltd. Built for India's shopkeepers · Hackathon demo</div>
+<div><a href="https://github.com/uditareddyS/Waypoint" target="_blank" rel="noopener" style="text-decoration:underline;">View source on GitHub ↗</a></div>
 </div>
 </div>
 </footer>
@@ -1341,17 +1367,37 @@ try {
 });
 });
 
-// Copy promo
+// Copy promo — with fallback for HTTP contexts where navigator.clipboard is unavailable or fails silently
 const copyPromoBtn = document.getElementById('copyPromo');
+function fallbackCopy(text) {
+try {
+const ta = document.createElement('textarea');
+ta.value = text;
+ta.style.position = 'fixed';
+ta.style.left = '-9999px';
+ta.style.top = '0';
+document.body.appendChild(ta);
+ta.focus();
+ta.select();
+const ok = document.execCommand('copy');
+document.body.removeChild(ta);
+return ok;
+} catch (e) { return false; }
+}
 if (copyPromoBtn) {
 copyPromoBtn.addEventListener('click', function() {
 const text = document.getElementById('promoText').textContent;
-if (navigator.clipboard) {
-navigator.clipboard.writeText(text).then(function() {
 const label = document.getElementById('copyLabel');
-if (label) label.textContent = 'Copied!';
-setTimeout(function() { if (label) label.textContent = 'Copy message'; }, 2000);
-}).catch(function() {});
+function showCopied(success) {
+if (!label) return;
+label.textContent = success ? 'Copied!' : 'Select & copy (Ctrl+C)';
+setTimeout(function() { label.textContent = 'Copy message'; }, 2000);
+}
+if (navigator.clipboard && window.isSecureContext) {
+navigator.clipboard.writeText(text).then(function() { showCopied(true); })
+.catch(function() { showCopied(fallbackCopy(text)); });
+} else {
+showCopied(fallbackCopy(text));
 }
 });
 }
@@ -1476,14 +1522,88 @@ if (shareWhatsappBtn) {
   });
 }
 
-// Mic button
+// Mic button — real Web Speech API integration
 const micBtn = document.getElementById('micBtn');
+const businessInputEl = document.getElementById('businessInput');
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let isListening = false;
+
+function showMicMessage(msg) {
+  let note = document.getElementById('micNote');
+  if (!note) {
+    note = document.createElement('div');
+    note.id = 'micNote';
+    note.style.cssText = 'font-size:.78rem;color:#C4522A;margin-top:.5rem;';
+    if (inputShellEl && inputShellEl.parentNode) {
+      inputShellEl.parentNode.insertBefore(note, inputShellEl.nextSibling);
+    }
+  }
+  note.textContent = msg;
+  clearTimeout(note._t);
+  note._t = setTimeout(function() { note.textContent = ''; }, 4000);
+}
+
+const inputShellEl = document.getElementById('inputShell');
+
 if (micBtn) {
-micBtn.addEventListener('click', function() {
-micBtn.classList.toggle('listening');
-const inputShell = document.getElementById('inputShell');
-if (inputShell) inputShell.classList.toggle('listening-on', micBtn.classList.contains('listening'));
-});
+  const isSecure = window.isSecureContext;
+  if (!SpeechRecognitionAPI) {
+    micBtn.addEventListener('click', function() {
+      showMicMessage('Voice input isn\'t supported in this browser — try Chrome, or type your business instead.');
+    });
+  } else if (!isSecure) {
+    micBtn.addEventListener('click', function() {
+      showMicMessage('Voice input needs a secure (https) connection — please type your business for now.');
+    });
+  } else {
+    recognition = new SpeechRecognitionAPI();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = 'en-IN';
+
+    recognition.onstart = function() {
+      isListening = true;
+      micBtn.classList.add('listening');
+      if (inputShellEl) inputShellEl.classList.add('listening-on');
+    };
+
+    recognition.onresult = function(event) {
+      let transcript = '';
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      if (businessInputEl) businessInputEl.value = transcript;
+    };
+
+    recognition.onerror = function(event) {
+      if (event.error === 'not-allowed' || event.error === 'permission-denied') {
+        showMicMessage('Microphone access was blocked — allow it in your browser settings and try again.');
+      } else if (event.error === 'no-speech') {
+        showMicMessage('Didn\'t catch that — try again, a bit closer to the mic.');
+      } else {
+        showMicMessage('Voice input hit an error — please type your business instead.');
+      }
+    };
+
+    recognition.onend = function() {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      if (inputShellEl) inputShellEl.classList.remove('listening-on');
+    };
+
+    micBtn.addEventListener('click', function() {
+      if (isListening) {
+        recognition.stop();
+      } else {
+        try {
+          recognition.start();
+        } catch (e) {
+          showMicMessage('Could not start voice input — please type your business instead.');
+        }
+      }
+    });
+  }
 }
 
 // Form submissions
