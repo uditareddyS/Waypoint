@@ -2,7 +2,7 @@
 
 **Live demo:** http://waypoint-app-technovas.s3-website-ap-southeast-2.amazonaws.com/
 
-Built for AWS "First Commit" (WeMakeDevs x AWS) — Problem Statement 29: Street Vendor Digitalization Agent.
+Built for AWS "First Commit" (WeMakeDevs x AWS)
 
 ## What it does
 
