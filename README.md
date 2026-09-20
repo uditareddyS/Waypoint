@@ -2,7 +2,7 @@
 
 **Live demo:** https://d3oy4qo4wfz9jl.cloudfront.net/
 
-Built for AWS "First Commit" (WeMakeDevs x AWS)
+Built for AWS "First Commit" (WeMakeDevs x AWS) — Problem Statement 29: Street Vendor Digitalization Agent.
 
 ## What it does
 
@@ -16,14 +16,15 @@ A vendor describes their business in plain language — "I sell fruit in Pune's 
 
 ## Tech stack (AWS Ship It track)
 
-- **Amazon S3** — static frontend hosting
+- **Amazon S3 + CloudFront** — static frontend hosting, served over HTTPS
 - **API Gateway + Lambda** — vendor profile ingestion and kit generation
 - **DynamoDB** — vendor profile storage
+- **AWS Step Functions** — orchestration for the generation pipeline
 - **Amazon Bedrock + Bedrock Knowledge Base** — RAG-based scheme matching and promo generation (see "Known limitations" below)
 
 ## Repo structure
 
-- `/frontend` — single-page app (`index.html`), deployed to S3
+- `/frontend` — single-page app (`index.html`), deployed to S3 + CloudFront
 - `/backend` — Lambda functions and Step Functions pipeline definition
 - `/ai` — seed data, Bedrock Knowledge Base setup, prompts
 
