@@ -1,8 +1,8 @@
-# Waypoint Backend
+# Waypoint AI / RAG
 
-## Lambdas
-- `ingestVendorProfile.py` — POST /vendor — saves vendor profile to DynamoDB
-- `generateVendorKit.py` — POST /vendor/generate — returns scheme match, UPI QR payload, and promo message (currently keyword-based fallback; Bedrock synthesis built and pending quota unblock)
+- Seed data on government schemes (PM SVANidhi, Udyam, UPI onboarding steps, promo templates)
+- Bedrock Knowledge Base configuration for retrieval
+- Parsing prompt: extracts structured vendor profile from free-text input
+- Synthesis prompt: generates scheme match + promo message, with `language` parameter support (English/Hindi/Telugu)
 
-## Step Functions
-`vendor-kit-pipeline.json` — orchestration definition for the full parse → retrieve → synthesize flow.
+**Status:** Built and validated conversationally. Blocked on Bedrock account quota during the hackathon window — not yet tested against live inference.
