@@ -2,7 +2,7 @@
 
 **Live demo:** https://d3oy4qo4wfz9jl.cloudfront.net/
 
-Built for AWS "First Commit" (WeMakeDevs x AWS) — Problem Statement 29: Street Vendor Digitalization Agent.
+Built for AWS "First Commit" (WeMakeDevs x AWS) —  Street Vendor Digitalization Agent.
 
 ## What it does
 
