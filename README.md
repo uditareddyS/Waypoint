@@ -33,6 +33,10 @@ We hit an Amazon Bedrock account-quota block partway through the hackathon that 
 
 The UPI QR code is a real, standards-compliant UPI QR (scannable by any UPI app) using a placeholder merchant ID, since no real bank account/merchant onboarding exists for this demo.
 
+## Future scope
+
+Waypoint is built to grow well beyond this hackathon build. The most immediate next step is real UPI merchant integration — connecting each vendor's actual bank account (via a partner like Razorpay or Setu, or direct NPCI onboarding) so the generated QR code accepts real payments instead of using a placeholder merchant ID. Once Bedrock quota is restored, the keyword-based fallback gets swapped for the live Bedrock Knowledge Base pipeline we already built and validated, giving every vendor a genuinely personalized scheme match and promo message instead of one of five fixed templates. Beyond that, we'd add a real location field so scheme matching can account for state-specific schemes and eligibility, expand language support from 3 to the full 12 Indian languages already scoped in the synthesis prompt, and build a lightweight vendor login so someone can return to their kit later instead of regenerating it each visit. Longer term, the same architecture could support a WhatsApp-native version of Waypoint — since many vendors already live in WhatsApp, meeting them there removes even the small friction of opening a website.
+
 ## Setup
 
 The frontend is a single static `index.html` file — no build step required. Open it directly or serve via `npx serve .` inside `/frontend`.
