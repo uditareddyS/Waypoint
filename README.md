@@ -1,6 +1,6 @@
 # Waypoint — Street Vendor Digitalization Agent
 
-**Live demo:** http://waypoint-app-technovas.s3-website-ap-southeast-2.amazonaws.com/
+**Live demo:** https://d3oy4qo4wfz9jl.cloudfront.net/
 
 Built for AWS "First Commit" (WeMakeDevs x AWS)
 
